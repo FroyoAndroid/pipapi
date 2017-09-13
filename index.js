@@ -30,7 +30,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Database Connection
-const connection = mongoose.connect(config.database);
-
+const connection = mongoose.connect(config.database, function (err) {
+    if (err) throw err;
+    // logger.de('Successfully connected to MongoDB');
+});
 
 router(app);

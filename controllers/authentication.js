@@ -27,13 +27,41 @@ function setUserInfo(request) {
 // Login Route
 //========================================
 exports.login = function (req, res, next) {
+    let user = null,
+        eMail = req.body.email,
+        password = req.body.password;
+    try {
+        User.findOne({
+            email: eMail
+        }, function (err, existingUser) {
+            if (err) {
+                next(err);
+            }
 
-    let userInfo = setUserInfo(req.user);
+            if (existingUser) {
+                existingUser.comparePassword(password, function (err, isMatch) {
+                    if (err) {
+                        res.status(403).json({
+                            error: 'Invalid credentails'
+                        });
+                    } else {
+                        let userInfo = setUserInfo(existingUser);
+                        res.status(200).json({
+                            token: generateToken(userInfo),
+                            user: userInfo
+                        });
+                    }
+                });
+            }
 
-    res.status(200).json({
-        token: generateToken(userInfo),
-        user: userInfo
-    });
+        });
+    } catch (error) {
+        res.status(403).json({
+            error: 'Invalid credentails'
+        });
+    }
+
+    // let userInfo = setUserInfo(req.user);
 };
 
 
@@ -115,7 +143,7 @@ exports.register = function (req, res, next) {
                 let userInfo = setUserInfo(user);
                 mailer.sendMail(userInfo.email);
                 res.status(201).json({
-                    token: 'JWT ' + generateToken(userInfo),
+                    token: generateToken(userInfo),
                     user: userInfo
                 });
             });

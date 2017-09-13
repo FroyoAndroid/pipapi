@@ -33,7 +33,7 @@ module.exports = function (app) {
     authRoutes.post('/register', AuthenticationController.register);
 
     // Login route
-    authRoutes.post('/login', requireLogin, AuthenticationController.login);
+    authRoutes.post('/login', AuthenticationController.login);
     // Set url for API group routes
     app.use('/api', apiRoutes);
 };
