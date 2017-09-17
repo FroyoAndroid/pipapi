@@ -14,7 +14,7 @@ console.log('Your server is running on port ' + config.port + '.');
 
 // Setting up basic middleware for all Express requests
 app.use(logger('dev')); // Log requests to API using morgan
-app.use(favicon(__dirname + '/public/favicon.png'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // Enable CORS from client-side
 app.use(function (req, res, next) {

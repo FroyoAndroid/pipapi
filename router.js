@@ -36,4 +36,8 @@ module.exports = function (app) {
     authRoutes.post('/login', AuthenticationController.login);
     // Set url for API group routes
     app.use('/api', apiRoutes);
+
+    app.use('/', function(req, res, next) {
+        res.status(200).json("Welcome to Piyala API");
+    });
 };
