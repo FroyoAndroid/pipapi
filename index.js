@@ -6,8 +6,7 @@ const express = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     config = require('./config/main'),
-    router = require('./router'),
-    cors = require('cors');
+    router = require('./router');
 
 const server = app.listen(config.port);
 console.log('Your server is running on port ' + config.port + '.');
@@ -25,7 +24,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(cors());
 // parse application/json
 app.use(bodyParser.json());
 
